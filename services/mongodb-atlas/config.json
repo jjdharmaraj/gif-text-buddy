@@ -1,0 +1,11 @@
+{
+    "id": "5cfa7ada5e352b52766d4481",
+    "name": "mongodb-atlas",
+    "type": "mongodb-atlas",
+    "config": {
+        "clusterName": "PutItTogether-Weekly-6",
+        "readPreference": "primary",
+        "wireProtocolEnabled": false
+    },
+    "version": 1
+}

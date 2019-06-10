@@ -1,0 +1,14 @@
+{
+    "id": "5cfd93d35e352b5276e7bf4f",
+    "name": "fbGraph",
+    "actions": [
+        "post"
+    ],
+    "when": {
+        "%%args.url.host": {
+            "%in": [
+                "graph.facebook.com"
+            ]
+        }
+    }
+}

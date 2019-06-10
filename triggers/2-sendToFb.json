@@ -1,0 +1,21 @@
+{
+    "id": "5cfdb800fa5aaba407fe8652",
+    "name": "2-sendToFb",
+    "type": "DATABASE",
+    "config": {
+        "operation_types": [
+            "UPDATE",
+            "REPLACE"
+        ],
+        "database": "fb",
+        "collection": "private",
+        "service_name": "mongodb-atlas",
+        "match": {
+            "fullDocument.nextTrigger": "sendToFb"
+        },
+        "full_document": true,
+        "unordered": false
+    },
+    "function_name": "sendToFb",
+    "disabled": false
+}

@@ -1,0 +1,14 @@
+{
+    "id": "5cfdc11ffa5aaba407ffb80c",
+    "name": "astroLookup",
+    "actions": [
+        "post"
+    ],
+    "when": {
+        "%%args.url.host": {
+            "%in": [
+                "aztro.sameerkumar.website"
+            ]
+        }
+    }
+}

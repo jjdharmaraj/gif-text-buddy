@@ -1,0 +1,21 @@
+{
+    "id": "5cfdb454c0a13a7cddad5f7e",
+    "name": "0-astroFn",
+    "type": "DATABASE",
+    "config": {
+        "operation_types": [
+            "INSERT",
+            "UPDATE"
+        ],
+        "database": "fb",
+        "collection": "private",
+        "service_name": "mongodb-atlas",
+        "match": {
+            "fullDocument.nextTrigger": "astroFn"
+        },
+        "full_document": true,
+        "unordered": false
+    },
+    "function_name": "astroFn",
+    "disabled": false
+}
