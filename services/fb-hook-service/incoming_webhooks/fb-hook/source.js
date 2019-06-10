@@ -168,24 +168,21 @@ function messageDispatch(senderFbId, messagingEvent) {
     else {
         text = 'Thanks for the message but I am not sure what kind.';
     }
-    return sendTextMessage(senderFbId, text);
+    return context.functions.execute("sendToFb", senderFbId, text);
 }
 /**
- * This just sends a text message.
- * 
- * https://developers.facebook.com/docs/messenger-platform/reference/send-api/#message
- * 
+ * Typing indicators are automatically turned off after 20 seconds, or when the bot sends a message.
+ *
+ * https://developers.facebook.com/docs/messenger-platform/send-messages/sender-actions/#supported_actions
+ *
  * @param {String} senderFbId The user id from Facebook.
- * @param {String} text The message sent to users; 2000 character limit.
  */
-function sendTextMessage(senderFbId, text) {
+function sendDots(senderFbId) {
     return new Promise((resolve, reject) => {
         const messaging_type = "RESPONSE";
         let outgoingJson = {
             messaging_type: messaging_type, recipient: { id: senderFbId },
-            message: {
-                text: text
-            }
+            sender_action: "typing_on"
         };
         sendToFb(outgoingJson)
             .then(callbackFb => {
@@ -195,19 +192,5 @@ function sendTextMessage(senderFbId, text) {
             .catch(error => {
                 reject(error);
             });
-    });
-}
-/**
- * This is the main function, this is really a Promise. 
- * 
- * @param {Object} json The data sent to facebook.
- */
-function sendToFb(json) {
-    const PAGE_TOKEN = context.values.get("FB_PAGE_ACCESS_TOKEN");
-    const http = context.services.get("fb-hook-service");
-    return http.post({
-        url: "https://graph.facebook.com/v2.6/me/messages?access_token=" + PAGE_TOKEN,
-        body: json,
-        encodeBodyAsJSON: true
     });
 }
