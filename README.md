@@ -4,6 +4,10 @@ Have you ever needed help finding the best GIF to send your bestie but don't kno
 
 ![Maya from Speechless saying "You're Perfect"](https://raw.githubusercontent.com/jjdharmaraj/gif-text-buddy/master/images/speechless.gif)
 
+## Diagram from a high level
+
+![The different steps of the machine](https://raw.githubusercontent.com/jjdharmaraj/gif-text-buddy/master/images/diagram.jpg)
+
 ## Thanks
 0. https://developers.giphy.com/
 1. https://aztro.readthedocs.io/en/latest/
