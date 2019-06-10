@@ -1,0 +1,14 @@
+{
+    "id": "5cfda6906eff46c8d55dc09a",
+    "name": "giphy",
+    "actions": [
+        "get"
+    ],
+    "when": {
+        "%%args.url.host": {
+            "%in": [
+                "https://api.giphy.com"
+            ]
+        }
+    }
+}

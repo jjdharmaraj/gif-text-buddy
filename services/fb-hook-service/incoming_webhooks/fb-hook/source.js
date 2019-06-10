@@ -172,7 +172,10 @@ function messageDispatch(senderFbId, messagingEvent) {
     //send typing indicator since the machine might take awhile for the universe to find the perfect gif
     return sendDots(senderFbId)
         .then(fbCallback => {
-            return context.functions.execute("sendToFb", senderFbId, text);
+            return context.functions.execute("giphyApi", "bruins", 25, 0);
+        })
+        .then(image => {
+            return context.functions.execute("sendToFb", senderFbId, text, image);
         });
 }
 /**
