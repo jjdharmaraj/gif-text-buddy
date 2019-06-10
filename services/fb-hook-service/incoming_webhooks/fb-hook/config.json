@@ -1,7 +1,7 @@
 {
     "id": "5cfd93c3c0a13a7cdda98d1f",
     "name": "fb-hook",
-    "run_as_user_id": "",
+    "run_as_user_id": "5cfe61b75e352b527603231f",
     "run_as_user_id_script_source": "",
     "options": {
         "httpMethod": "POST",

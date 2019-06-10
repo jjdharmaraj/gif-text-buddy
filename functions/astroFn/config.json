@@ -1,6 +1,5 @@
 {
     "id": "5cfdc0e1bf195315d5d5641c",
     "name": "astroFn",
-    "private": true,
-    "run_as_system": true
+    "private": true
 }
