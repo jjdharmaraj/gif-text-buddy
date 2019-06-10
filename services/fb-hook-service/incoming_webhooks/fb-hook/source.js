@@ -163,9 +163,9 @@ function messageDispatch(senderFbId, messagingEvent) {
     }
     //send the message
     if (payload == 'help') {
-        let text = 'Gif Text Buddy uses a formula to stitch together data from across the universe to find you the perfect gif '
-            + 'to send to your friends.  This includes the air temperature from the insight rover on Mars, the water temperature on '
-            + 'Cape Cod, and a roll of the dice in our trigger happy formula.';
+        let text = 'Gif Text Buddy uses a formula to stitch together data from across the universe to find you the perfect GIF '
+            + 'to send to your friends.  This includes the air temperature from the InSight Mars Lander, the water temperature in '
+            + 'Cape Cod, is Mercury in retrograde and a roll of the dice in our trigger happy formula.';
         return sendTextMessage(senderFbId, text)
             .then(fbCallback => {
                 return fbCallback;
