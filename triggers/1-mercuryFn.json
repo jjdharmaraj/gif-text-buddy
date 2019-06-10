@@ -1,0 +1,21 @@
+{
+    "id": "5cfdd5a3bf195315d5d7db7a",
+    "name": "1-mercuryFn",
+    "type": "DATABASE",
+    "config": {
+        "operation_types": [
+            "UPDATE",
+            "REPLACE"
+        ],
+        "database": "fb",
+        "collection": "private",
+        "service_name": "mongodb-atlas",
+        "match": {
+            "fullDocument.nextTrigger": "mercuryFn"
+        },
+        "full_document": true,
+        "unordered": false
+    },
+    "function_name": "mercuryFn",
+    "disabled": false
+}

@@ -1,6 +1,6 @@
 {
-    "id": "5cfdc3552890d6067b7ad3bd",
-    "name": "1-giphyApi",
+    "id": "5cfdb800fa5aaba407fe8652",
+    "name": "last-sendToFb",
     "type": "DATABASE",
     "config": {
         "operation_types": [
@@ -11,11 +11,11 @@
         "collection": "private",
         "service_name": "mongodb-atlas",
         "match": {
-            "fullDocument.nextTrigger": "giphyApi"
+            "fullDocument.nextTrigger": "sendToFb"
         },
         "full_document": true,
         "unordered": false
     },
-    "function_name": "giphyApi",
+    "function_name": "sendToFb",
     "disabled": false
 }

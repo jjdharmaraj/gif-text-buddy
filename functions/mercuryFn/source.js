@@ -15,23 +15,23 @@
 exports = function (arg) {
     let fullDocument = arg.fullDocument;
     const http = context.services.get("fb-hook-service");
-    let url = 'https://aztro.sameerkumar.website?sign=' + fullDocument.payload;
+    let url = 'https://mercuryretrogradeapi.com';
     return http.post({ url: url })
         .then(astroObj => {
             let body = EJSON.parse(astroObj.body.text());
-            let lucky_number;
-            if (body.lucky_number) {
-                lucky_number = body.lucky_number;
+            let lucky_number = fullDocument.lucky_number;
+            if (body.is_retrograde && body.is_retrograde === true) {
+              //First planet from the sun
+                lucky_number = lucky_number + 1;
             } else {
-                //it is the meaning of life
-                lucky_number = "42";
+                lucky_number = lucky_number;
             }
             return context.services
                 .get("mongodb-atlas")
                 .db("fb")
                 .collection("private")
                 .updateOne({ senderFbId: fullDocument.senderFbId },
-                    { nextTrigger: 'mercuryFn', lucky_number, payload: fullDocument.payload, senderFbId: fullDocument.senderFbId })
+                    { nextTrigger: 'giphyApi', lucky_number, payload: fullDocument.payload, senderFbId: fullDocument.senderFbId })
                 .then(result => {
                     return;
                 })
