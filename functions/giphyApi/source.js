@@ -18,10 +18,10 @@ exports = function (arg) {
   const http = context.services.get("fb-hook-service");
 
   let url = "https://api.giphy.com/v1/gifs/search?api_key=" + GIPHY_API_KEY
-    + "&q=" + fullDocument.payload;
+    + "&q=" + fullDocument.payload
   // + "&limit=" + limit
-  // + "&offset=" + offset
-  // + "&rating=G&lang=en";
+  + "&offset=" + fullDocument.lucky_number
+  + "&rating=G&lang=en";
   return http.get({ url: url })
     .then(giphyObj => {
       let body = EJSON.parse(giphyObj.body.text());

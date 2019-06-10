@@ -19,18 +19,19 @@ exports = function (arg) {
     return http.post({ url: url })
         .then(astroObj => {
             let body = EJSON.parse(astroObj.body.text());
-            let reading;
-            if (body.description) {
-                reading = body.description;
+            let lucky_number;
+            if (body.lucky_number) {
+                lucky_number = body.lucky_number;
             } else {
-                reading = 'The Bruins will be champs!!';
+                //it is the meaning of life
+                lucky_number = "42";
             }
             return context.services
                 .get("mongodb-atlas")
                 .db("fb")
                 .collection("private")
                 .updateOne({ senderFbId: fullDocument.senderFbId },
-                    { nextTrigger: 'giphyApi', reading, payload: fullDocument.payload, senderFbId: fullDocument.senderFbId })
+                    { nextTrigger: 'giphyApi', lucky_number, payload: fullDocument.payload, senderFbId: fullDocument.senderFbId })
                 .then(result => {
                     return;
                 })
