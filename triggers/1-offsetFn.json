@@ -1,6 +1,6 @@
 {
-    "id": "5cfdc3552890d6067b7ad3bd",
-    "name": "1-giphyApi",
+    "id": "5cfdd5a3bf195315d5d7db7a",
+    "name": "1-offsetFn",
     "type": "DATABASE",
     "config": {
         "operation_types": [
@@ -11,11 +11,11 @@
         "collection": "private",
         "service_name": "mongodb-atlas",
         "match": {
-            "fullDocument.nextTrigger": "giphyApi"
+            "fullDocument.nextTrigger": "offsetFn"
         },
         "full_document": true,
-        "unordered": false
+        "unordered": true
     },
-    "function_name": "giphyApi",
+    "function_name": "offsetFn",
     "disabled": false
 }

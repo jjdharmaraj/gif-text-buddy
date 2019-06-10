@@ -16,21 +16,38 @@ exports = function (arg) {
   let fullDocument = arg.fullDocument;
   const GIPHY_API_KEY = context.values.get("GIPHY_API_KEY");
   const http = context.services.get("fb-hook-service");
+  let lucky_number = fullDocument.lucky_number;
 
   let url = "https://api.giphy.com/v1/gifs/search?api_key=" + GIPHY_API_KEY
     + "&q=" + fullDocument.payload
-  // + "&limit=" + limit
-  + "&offset=" + fullDocument.lucky_number
-  + "&rating=G&lang=en";
+    + "&limit=" + fullDocument.limit
+    + "&offset=" + fullDocument.offset
+    + "&rating=G&lang=en";
   return http.get({ url: url })
     .then(giphyObj => {
       let body = EJSON.parse(giphyObj.body.text());
+      let image;
+      if (body.data && body.data[lucky_number] && body.data[lucky_number].images
+        && body.data[lucky_number].images.original && body.data[lucky_number].images.original.url) {
+        image = body.data[lucky_number].images.original.url;
+      } else if (body.data && body.data[0] && body.data[0].images
+        && body.data[0].images.original && body.data[0].images.original.url) {
+        image = body.data[0].images.original.url;
+      } else {
+        image = 'https://media.giphy.com/media/ASd0Ukj0y3qMM/giphy.gif';
+      }
       return context.services
         .get("mongodb-atlas")
         .db("fb")
         .collection("private")
         .updateOne({ senderFbId: fullDocument.senderFbId },
-          { nextTrigger: 'sendToFb', image: body.data[0].images.original.url, senderFbId: fullDocument.senderFbId })
+          {
+            nextTrigger: 'sendToFb', image, senderFbId: fullDocument.senderFbId,
+            offset: fullDocument.offset,
+            lucky_number: fullDocument.lucky_number,
+            limit: fullDocument.limit,
+            payload: fullDocument.payload,
+          })
         .then(result => {
           return;
         })

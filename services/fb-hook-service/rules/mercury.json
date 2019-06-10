@@ -1,0 +1,14 @@
+{
+    "id": "5cfdd39358a1c7c5383f807a",
+    "name": "mercury",
+    "actions": [
+        "post"
+    ],
+    "when": {
+        "%%args.url.host": {
+            "%in": [
+                "mercuryretrogradeapi.com"
+            ]
+        }
+    }
+}

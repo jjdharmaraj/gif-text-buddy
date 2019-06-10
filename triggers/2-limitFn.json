@@ -1,21 +1,21 @@
 {
-    "id": "5cfdb454c0a13a7cddad5f7e",
-    "name": "0-astroFn",
+    "id": "5cfdd905f518fc27a4fe6eb6",
+    "name": "2-limitFn",
     "type": "DATABASE",
     "config": {
         "operation_types": [
-            "INSERT",
-            "UPDATE"
+            "UPDATE",
+            "REPLACE"
         ],
         "database": "fb",
         "collection": "private",
         "service_name": "mongodb-atlas",
         "match": {
-            "fullDocument.nextTrigger": "astroFn"
+            "fullDocument.nextTrigger": "limitFn"
         },
         "full_document": true,
         "unordered": true
     },
-    "function_name": "astroFn",
+    "function_name": "limitFn",
     "disabled": false
 }

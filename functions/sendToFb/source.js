@@ -16,7 +16,8 @@ exports = function (arg) {
     let fullDocument = arg.fullDocument;
     return sendImageMessage(fullDocument.senderFbId, fullDocument.image)
         .then(fbCallback => {
-            return sendTextMessage(fullDocument.senderFbId, 'Fun isn\'t something one considers when balancing the universe.');
+            let text = `The universe has dictated that your lucky number is ${fullDocument.lucky_number}.`;
+            return sendTextMessage(fullDocument.senderFbId, text);
         });
 };
 /**
