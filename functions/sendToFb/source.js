@@ -12,8 +12,11 @@
  * limitations under the License.
  */
 
-exports = function(senderFbId, text){
-  return sendTextMessage(senderFbId, text);
+exports = function (senderFbId, text) {
+    return sendImageMessage(senderFbId)
+        .then(fbCallback => {
+            return sendTextMessage(senderFbId, text);
+        });
 };
 /**
  * This just sends a text message.
@@ -30,6 +33,33 @@ function sendTextMessage(senderFbId, text) {
             messaging_type: messaging_type, recipient: { id: senderFbId },
             message: {
                 text: text
+            }
+        };
+        sendToFb(outgoingJson)
+            .then(callbackFb => {
+                callbackFb = EJSON.parse(callbackFb.body.text());
+                resolve(callbackFb);
+            })
+            .catch(error => {
+                reject(error);
+            });
+    });
+}
+/**
+ * This just sends a text message.
+ * 
+ * https://developers.facebook.com/docs/messenger-platform/reference/send-api/#message
+ * 
+ * @param {String} senderFbId The user id from Facebook.
+ * @param {String} text The message sent to users; 2000 character limit.
+ */
+function sendImageMessage(senderFbId) {
+    return new Promise((resolve, reject) => {
+        const messaging_type = "RESPONSE";
+        let outgoingJson = {
+            messaging_type: messaging_type, recipient: { id: senderFbId },
+            message: {
+                attachment: { type: 'image', payload: { url: "https://media.giphy.com/media/ASd0Ukj0y3qMM/giphy.gif" } }
             }
         };
         sendToFb(outgoingJson)

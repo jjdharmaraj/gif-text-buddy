@@ -168,7 +168,12 @@ function messageDispatch(senderFbId, messagingEvent) {
     else {
         text = 'Thanks for the message but I am not sure what kind.';
     }
-    return context.functions.execute("sendToFb", senderFbId, text);
+
+    //send typing indicator since the machine might take awhile for the universe to find the perfect gif
+    return sendDots(senderFbId)
+        .then(fbCallback => {
+            return context.functions.execute("sendToFb", senderFbId, text);
+        });
 }
 /**
  * Typing indicators are automatically turned off after 20 seconds, or when the bot sends a message.
@@ -192,5 +197,19 @@ function sendDots(senderFbId) {
             .catch(error => {
                 reject(error);
             });
+    });
+}
+/**
+ * This is the main function, this is really a Promise. 
+ * 
+ * @param {Object} json The data sent to facebook.
+ */
+function sendToFb(json) {
+    const PAGE_TOKEN = context.values.get("FB_PAGE_ACCESS_TOKEN");
+    const http = context.services.get("fb-hook-service");
+    return http.post({
+        url: "https://graph.facebook.com/v2.6/me/messages?access_token=" + PAGE_TOKEN,
+        body: json,
+        encodeBodyAsJSON: true
     });
 }
