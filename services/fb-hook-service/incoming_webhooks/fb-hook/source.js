@@ -175,14 +175,14 @@ function messageDispatch(senderFbId, messagingEvent) {
         .db("fb")
         .collection("private")
         .insertOne({
-            senderFbId, payload, nextTrigger: 'giphyApi',
+            senderFbId, payload, nextTrigger: 'astroFn',
         })
         .then(result => {
             return sendDots(senderFbId);
         })
         .then(fbCallback => {
             return fbCallback;
-        })
+        });
 }
 /**
  * Typing indicators are automatically turned off after 20 seconds, or when the bot sends a message.

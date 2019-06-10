@@ -1,11 +1,11 @@
 {
-    "id": "5cfdb454c0a13a7cddad5f7e",
-    "name": "0-incomingFb",
+    "id": "5cfdc3552890d6067b7ad3bd",
+    "name": "1-giphyApi",
     "type": "DATABASE",
     "config": {
         "operation_types": [
-            "INSERT",
-            "UPDATE"
+            "UPDATE",
+            "REPLACE"
         ],
         "database": "fb",
         "collection": "private",

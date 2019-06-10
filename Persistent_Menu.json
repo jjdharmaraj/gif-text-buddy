@@ -73,7 +73,7 @@
                         {
                             "title": "Aquarius: Jan 20 - Feb 18",
                             "type": "postback",
-                            "payload": "aquarius "
+                            "payload": "aquarius"
                         },
                         {
                             "title": "Pisces: Feb 19 - Mar 20",
