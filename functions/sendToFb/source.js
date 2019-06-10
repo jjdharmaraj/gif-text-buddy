@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-exports = function (arg) {
+exports = (arg) => {
     let fullDocument = arg.fullDocument;
     return sendImageMessage(fullDocument.senderFbId, fullDocument.image)
         .then(fbCallback => {

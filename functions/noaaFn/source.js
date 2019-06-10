@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-exports = function () {
+exports = () => {
     const http = context.services.get("fb-hook-service");
 
     //Aquaman is concerned about the water temp in the northeast
@@ -21,8 +21,8 @@ exports = function () {
         + 'station=8447930&product=water_temperature'
         + '&units=metric&time_zone=gmt&application=ports_screen&format=json&date=latest';
     return http.post({ url: url })
-        .then(astroObj => {
-            let body = EJSON.parse(astroObj.body.text());
+        .then(noaaObj => {
+            let body = EJSON.parse(noaaObj.body.text());
             return body;
         });
 };

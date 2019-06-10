@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-exports = function (arg) {
+exports = (arg) => {
     let fullDocument = arg.fullDocument;
     const http = context.services.get("fb-hook-service");
     let url = 'https://aztro.sameerkumar.website?sign=' + fullDocument.payload;
@@ -26,18 +26,15 @@ exports = function (arg) {
                 //it is the meaning of life
                 lucky_number = "42";
             }
-            return context.services
-                .get("mongodb-atlas")
-                .db("fb")
-                .collection("private")
+            return context.services.get("mongodb-atlas").db("fb").collection("private")
                 .updateOne({ senderFbId: fullDocument.senderFbId },
-                    { nextTrigger: 'offsetFn', lucky_number, payload: fullDocument.payload, senderFbId: fullDocument.senderFbId })
-                .then(result => {
-                    return;
-                })
-                .catch(e => {
-                    console.log(e);
-                    return;
-                });
+                    { nextTrigger: 'offsetFn', lucky_number, payload: fullDocument.payload, senderFbId: fullDocument.senderFbId });
+        })
+        .then(result => {
+            return;
+        })
+        .catch(e => {
+            console.log(e);
+            return;
         });
 };

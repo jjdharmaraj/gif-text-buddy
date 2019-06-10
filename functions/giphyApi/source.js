@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-exports = function (arg) {
+exports = (arg) => {
   let fullDocument = arg.fullDocument;
   const GIPHY_API_KEY = context.values.get("GIPHY_API_KEY");
   const http = context.services.get("fb-hook-service");
@@ -27,6 +27,9 @@ exports = function (arg) {
     .then(giphyObj => {
       let body = EJSON.parse(giphyObj.body.text());
       let image;
+      //check to see if the lucky number image actually exists, if not get the first one.
+      //if there is nothing, then say hi to Ralph
+
       if (body.data && body.data[lucky_number] && body.data[lucky_number].images
         && body.data[lucky_number].images.original && body.data[lucky_number].images.original.url) {
         image = body.data[lucky_number].images.original.url;
@@ -36,24 +39,21 @@ exports = function (arg) {
       } else {
         image = 'https://media.giphy.com/media/ASd0Ukj0y3qMM/giphy.gif';
       }
-      return context.services
-        .get("mongodb-atlas")
-        .db("fb")
-        .collection("private")
+      return context.services.get("mongodb-atlas").db("fb").collection("private")
         .updateOne({ senderFbId: fullDocument.senderFbId },
           {
             nextTrigger: 'sendToFb', image, senderFbId: fullDocument.senderFbId,
             offset: fullDocument.offset,
-            lucky_number: fullDocument.lucky_number,
+            lucky_number,
             limit: fullDocument.limit,
             payload: fullDocument.payload,
-          })
-        .then(result => {
-          return;
-        })
-        .catch(e => {
-          console.log(e);
-          return;
-        });
+          });
+    })
+    .then(result => {
+      return;
+    })
+    .catch(e => {
+      console.log(e);
+      return;
     });
 };

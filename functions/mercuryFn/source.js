@@ -12,13 +12,13 @@
  * limitations under the License.
  */
 
-exports = function () {
+exports = () => {
     const http = context.services.get("fb-hook-service");
 
     let url = 'https://mercuryretrogradeapi.com';
     return http.post({ url: url })
-        .then(astroObj => {
-            let body = EJSON.parse(astroObj.body.text());
+        .then(mercuryObj => {
+            let body = EJSON.parse(mercuryObj.body.text());
             return body;
         });
 };
