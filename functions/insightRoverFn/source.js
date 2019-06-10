@@ -12,13 +12,13 @@
  * limitations under the License.
  */
 
-exports = function () {
+exports = () => {
     const http = context.services.get("fb-hook-service");
 
     let url = 'https://mars.nasa.gov/rss/api/?feed=weather&category=insight&feedtype=json&ver=1.0';
     return http.get({ url: url })
-        .then(astroObj => {
-            let body = EJSON.parse(astroObj.body.text());
+        .then(marsInsightObj => {
+            let body = EJSON.parse(marsInsightObj.body.text());
             return body;
         });
 };

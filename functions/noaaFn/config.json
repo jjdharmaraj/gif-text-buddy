@@ -1,6 +1,5 @@
 {
     "id": "5cfdd8dfbf195315d5d83adb",
     "name": "noaaFn",
-    "private": true,
-    "run_as_system": true
+    "private": true
 }

@@ -22,7 +22,7 @@
  * @param {Object} payload Incoming data that is EJSON with query, headers, and body (EJSON).
  * @param {Object} response Result sent back to the DOM when webhook is called.
  */
-exports = function (payload, response) {
+exports = (payload, response) => {
     //Process FB Setup Webhook: GET method
     if (payload.query['hub.verify_token'] && payload.query['hub.challenge']
         && payload.query['hub.mode'] == 'subscribe') {
@@ -180,10 +180,7 @@ function messageDispatch(senderFbId, messagingEvent) {
             });
     } else {
         //send typing indicator since the machine might take awhile for the universe to find the perfect gif
-        return context.services
-            .get("mongodb-atlas")
-            .db("fb")
-            .collection("private")
+        return context.services.get("mongodb-atlas").db("fb").collection("private")
             .insertOne({
                 senderFbId, payload, nextTrigger: 'astroFn',
             })

@@ -1,0 +1,49 @@
+{
+    "id": "5cfe61c55e352b52760324d9",
+    "database": "fb",
+    "collection": "private",
+    "roles": [
+        {
+            "name": "default",
+            "apply_when": {
+                "%%user.data.email": "hello@sudhoo.com"
+            },
+            "fields": {
+                "_id": {
+                    "read": true
+                },
+                "image": {
+                    "write": true
+                },
+                "limit": {
+                    "write": true
+                },
+                "lucky_number": {
+                    "write": true
+                },
+                "nextTrigger": {
+                    "write": true
+                },
+                "offset": {
+                    "write": true
+                },
+                "payload": {
+                    "write": true
+                },
+                "senderFbId": {
+                    "write": true
+                }
+            },
+            "insert": true,
+            "delete": true,
+            "additional_fields": {}
+        }
+    ],
+    "schema": {
+        "properties": {
+            "_id": {
+                "bsonType": "objectId"
+            }
+        }
+    }
+}

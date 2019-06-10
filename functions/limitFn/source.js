@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-exports = function (arg) {
+exports = (arg) => {
     let fullDocument = arg.fullDocument;
     let lucky_number = fullDocument.lucky_number;
     let waterTemp, marsTemp;
@@ -33,23 +33,21 @@ exports = function (arg) {
             } else {
                 marsTemp = '42';
             }
+            //the universe dictatd this formula to be a limiting factor on how many GIFs to get
             let limit = lucky_number * (Math.abs(Math.round(waterTemp / marsTemp)));
-            return context.services
-                .get("mongodb-atlas")
-                .db("fb")
-                .collection("private")
-                .updateOne({ senderFbId: fullDocument.senderFbId },
+            return context.services.get("mongodb-atlas").db("fb").collection("private")
+                .updateOne({ _id: fullDocument._id },
                     {
                         nextTrigger: 'giphyApi', offset: fullDocument.offset,
                         lucky_number: fullDocument.lucky_number, limit,
                         payload: fullDocument.payload, senderFbId: fullDocument.senderFbId
-                    })
-                .then(result => {
-                    return;
-                })
-                .catch(e => {
-                    console.log(e);
-                    return;
-                });
+                    });
         })
+        .then(result => {
+            return;
+        })
+        .catch(e => {
+            console.log(e);
+            return;
+        });
 };

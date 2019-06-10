@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-exports = function (arg) {
+exports = (arg) => {
     let fullDocument = arg.fullDocument;
     const http = context.services.get("fb-hook-service");
     context.functions.execute("mercuryFn")
@@ -34,22 +34,19 @@ exports = function (arg) {
             } else {
                 offset = 0;
             }
-            return context.services
-                .get("mongodb-atlas")
-                .db("fb")
-                .collection("private")
-                .updateOne({ senderFbId: fullDocument.senderFbId },
+            return context.services.get("mongodb-atlas").db("fb").collection("private")
+                .updateOne({ _id: fullDocument._id },
                     {
                         nextTrigger: 'limitFn', offset,
                         lucky_number: fullDocument.lucky_number,
                         payload: fullDocument.payload, senderFbId: fullDocument.senderFbId
-                    })
-                .then(result => {
-                    return;
-                })
-                .catch(e => {
-                    console.log(e);
-                    return;
-                });
+                    });
+        })
+        .then(result => {
+            return;
+        })
+        .catch(e => {
+            console.log(e);
+            return;
         });
 };

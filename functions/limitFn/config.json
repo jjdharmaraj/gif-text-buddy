@@ -1,6 +1,5 @@
 {
     "id": "5cfdf050f518fc27a4017020",
     "name": "limitFn",
-    "private": true,
-    "run_as_system": true
+    "private": true
 }
