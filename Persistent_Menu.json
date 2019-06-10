@@ -1,0 +1,88 @@
+{
+    "persistent_menu": [
+        {
+            "locale": "default",
+            "composer_input_disabled": true,
+            "call_to_actions": [
+                {
+                    "title": "March 21 - July 22",
+                    "type": "nested",
+                    "call_to_actions": [
+                        {
+                            "title": "Aries: Mar 21 - Apr 19",
+                            "type": "postback",
+                            "payload": "aries"
+                        },
+                        {
+                            "title": "Taurus: Apr 20 - May 20",
+                            "type": "postback",
+                            "payload": "taurus"
+                        },
+                        {
+                            "title": "Gemini: May 21 - Jun 20",
+                            "type": "postback",
+                            "payload": "gemini"
+                        },
+                        {
+                            "title": "Cancer: Jun 21 - Jul 22",
+                            "type": "postback",
+                            "payload": "cancer"
+                        }
+                    ]
+                },
+                {
+                    "title": "July 23 - November 21",
+                    "type": "nested",
+                    "call_to_actions": [
+                        {
+                            "title": "Leo: Jul 23 - Aug 22",
+                            "type": "postback",
+                            "payload": "leo"
+                        },
+                        {
+                            "title": "Virgo: Aug 23 - Sep 22",
+                            "type": "postback",
+                            "payload": "virgo"
+                        },
+                        {
+                            "title": "Libra: Sep 23 - Oct 22",
+                            "type": "postback",
+                            "payload": "libra"
+                        },
+                        {
+                            "title": "Scorpio: Oct 23 - Nov 21",
+                            "type": "postback",
+                            "payload": "scorpio"
+                        }
+                    ]
+                },
+                {
+                    "title": "November 22 - March 20",
+                    "type": "nested",
+                    "call_to_actions": [
+                        {
+                            "title": "Sagittarius: Nov 22 - Dec 21",
+                            "type": "postback",
+                            "payload": "sagittarius"
+                        },
+                        {
+                            "title": "Capricorn: Dec 22 - Jan 19",
+                            "type": "postback",
+                            "payload": "capricorn"
+                        },
+                        {
+                            "title": "Aquarius: Jan 20 - Feb 18",
+                            "type": "postback",
+                            "payload": "aquarius "
+                        },
+                        {
+                            "title": "Pisces: Feb 19 - Mar 20",
+                            "type": "postback",
+                            "payload": "pisces"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

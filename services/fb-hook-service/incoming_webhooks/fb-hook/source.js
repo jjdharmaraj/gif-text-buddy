@@ -152,16 +152,6 @@ function fbProcessIncoming(event) {
  * @param {Object} messagingEvent The relevant data sent from FB messenger.
  */
 function messageDispatch(senderFbId, messagingEvent) {
-    const quickReplies = [
-        {
-            "content_type": "text",
-            "title": "A quick reply",
-            "payload": "payloadForQuickReply"
-        },
-        {
-            "content_type": "location"
-        }
-    ];
     let text;
     if (messagingEvent.postback && messagingEvent.postback.payload) {
         text = `Thanks for the postback!  Your payload:  ${messagingEvent.postback.payload}`;
@@ -178,25 +168,23 @@ function messageDispatch(senderFbId, messagingEvent) {
     else {
         text = 'Thanks for the message but I am not sure what kind.';
     }
-    return sendQuickReplyMessage(senderFbId, text, quickReplies);
+    return sendTextMessage(senderFbId, text);
 }
 /**
- * Sends a text and quick reply buttons
+ * This just sends a text message.
  * 
- * https://developers.facebook.com/docs/messenger-platform/send-messages/quick-replies
+ * https://developers.facebook.com/docs/messenger-platform/reference/send-api/#message
  * 
  * @param {String} senderFbId The user id from Facebook.
  * @param {String} text The message sent to users; 2000 character limit.
- * @param {Array} quickRepliesArray These are the buttons the user will see; 20 character limit for text.
  */
-function sendQuickReplyMessage(senderFbId, text, quickRepliesArray) {
+function sendTextMessage(senderFbId, text) {
     return new Promise((resolve, reject) => {
         const messaging_type = "RESPONSE";
         let outgoingJson = {
             messaging_type: messaging_type, recipient: { id: senderFbId },
             message: {
-                text: text,
-                quick_replies: quickRepliesArray
+                text: text
             }
         };
         sendToFb(outgoingJson)
