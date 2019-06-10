@@ -40,7 +40,7 @@ exports = (arg) => {
         image = 'https://media.giphy.com/media/ASd0Ukj0y3qMM/giphy.gif';
       }
       return context.services.get("mongodb-atlas").db("fb").collection("private")
-        .updateOne({ senderFbId: fullDocument.senderFbId },
+        .updateOne({ _id: fullDocument._id },
           {
             nextTrigger: 'sendToFb', image, senderFbId: fullDocument.senderFbId,
             offset: fullDocument.offset,

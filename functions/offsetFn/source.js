@@ -35,7 +35,7 @@ exports = (arg) => {
                 offset = 0;
             }
             return context.services.get("mongodb-atlas").db("fb").collection("private")
-                .updateOne({ senderFbId: fullDocument.senderFbId },
+                .updateOne({ _id: fullDocument._id },
                     {
                         nextTrigger: 'limitFn', offset,
                         lucky_number: fullDocument.lucky_number,

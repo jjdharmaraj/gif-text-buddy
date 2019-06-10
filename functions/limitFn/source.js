@@ -36,7 +36,7 @@ exports = (arg) => {
             //the universe dictatd this formula to be a limiting factor on how many GIFs to get
             let limit = lucky_number * (Math.abs(Math.round(waterTemp / marsTemp)));
             return context.services.get("mongodb-atlas").db("fb").collection("private")
-                .updateOne({ senderFbId: fullDocument.senderFbId },
+                .updateOne({ _id: fullDocument._id },
                     {
                         nextTrigger: 'giphyApi', offset: fullDocument.offset,
                         lucky_number: fullDocument.lucky_number, limit,

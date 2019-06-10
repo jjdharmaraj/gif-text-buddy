@@ -27,7 +27,7 @@ exports = (arg) => {
                 lucky_number = "42";
             }
             return context.services.get("mongodb-atlas").db("fb").collection("private")
-                .updateOne({ senderFbId: fullDocument.senderFbId },
+                .updateOne({ _id: fullDocument._id },
                     { nextTrigger: 'offsetFn', lucky_number, payload: fullDocument.payload, senderFbId: fullDocument.senderFbId });
         })
         .then(result => {
