@@ -1,6 +1,6 @@
 {
     "id": "5cfdc3552890d6067b7ad3bd",
-    "name": "secondToLast-giphyApi",
+    "name": "3-giphyApi",
     "type": "DATABASE",
     "config": {
         "operation_types": [
@@ -14,7 +14,7 @@
             "fullDocument.nextTrigger": "giphyApi"
         },
         "full_document": true,
-        "unordered": false
+        "unordered": true
     },
     "function_name": "giphyApi",
     "disabled": false

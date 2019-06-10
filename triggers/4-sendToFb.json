@@ -1,6 +1,6 @@
 {
-    "id": "5cfdd905f518fc27a4fe6eb6",
-    "name": "2-noaaFn",
+    "id": "5cfdb800fa5aaba407fe8652",
+    "name": "4-sendToFb",
     "type": "DATABASE",
     "config": {
         "operation_types": [
@@ -11,11 +11,11 @@
         "collection": "private",
         "service_name": "mongodb-atlas",
         "match": {
-            "fullDocument.nextTrigger": "noaaFn"
+            "fullDocument.nextTrigger": "sendToFb"
         },
         "full_document": true,
-        "unordered": false
+        "unordered": true
     },
-    "function_name": "noaaFn",
+    "function_name": "sendToFb",
     "disabled": false
 }

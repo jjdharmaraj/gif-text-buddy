@@ -15,8 +15,8 @@
 exports = function () {
     const http = context.services.get("fb-hook-service");
 
-    let url = 'https://mercuryretrogradeapi.com';
-    return http.post({ url: url })
+    let url = 'https://mars.nasa.gov/rss/api/?feed=weather&category=insight&feedtype=json&ver=1.0';
+    return http.get({ url: url })
         .then(astroObj => {
             let body = EJSON.parse(astroObj.body.text());
             return body;

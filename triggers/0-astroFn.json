@@ -14,7 +14,7 @@
             "fullDocument.nextTrigger": "astroFn"
         },
         "full_document": true,
-        "unordered": false
+        "unordered": true
     },
     "function_name": "astroFn",
     "disabled": false

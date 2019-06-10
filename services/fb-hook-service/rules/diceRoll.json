@@ -1,0 +1,14 @@
+{
+    "id": "5cfddeed6eff46c8d5648a37",
+    "name": "diceRoll",
+    "actions": [
+        "get"
+    ],
+    "when": {
+        "%%args.url.host": {
+            "%in": [
+                "roll.diceapi.com"
+            ]
+        }
+    }
+}

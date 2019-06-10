@@ -1,6 +1,6 @@
 {
-    "id": "5cfdb800fa5aaba407fe8652",
-    "name": "last-sendToFb",
+    "id": "5cfdd5a3bf195315d5d7db7a",
+    "name": "1-offsetFn",
     "type": "DATABASE",
     "config": {
         "operation_types": [
@@ -11,11 +11,11 @@
         "collection": "private",
         "service_name": "mongodb-atlas",
         "match": {
-            "fullDocument.nextTrigger": "sendToFb"
+            "fullDocument.nextTrigger": "offsetFn"
         },
         "full_document": true,
-        "unordered": false
+        "unordered": true
     },
-    "function_name": "sendToFb",
+    "function_name": "offsetFn",
     "disabled": false
 }

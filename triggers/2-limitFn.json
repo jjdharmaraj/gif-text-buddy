@@ -1,6 +1,6 @@
 {
-    "id": "5cfdd5a3bf195315d5d7db7a",
-    "name": "1-mercuryFn",
+    "id": "5cfdd905f518fc27a4fe6eb6",
+    "name": "2-limitFn",
     "type": "DATABASE",
     "config": {
         "operation_types": [
@@ -11,11 +11,11 @@
         "collection": "private",
         "service_name": "mongodb-atlas",
         "match": {
-            "fullDocument.nextTrigger": "mercuryFn"
+            "fullDocument.nextTrigger": "limitFn"
         },
         "full_document": true,
-        "unordered": false
+        "unordered": true
     },
-    "function_name": "mercuryFn",
+    "function_name": "limitFn",
     "disabled": false
 }

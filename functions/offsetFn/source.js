@@ -15,23 +15,35 @@
 exports = function (arg) {
     let fullDocument = arg.fullDocument;
     const http = context.services.get("fb-hook-service");
-    let url = 'https://aztro.sameerkumar.website?sign=' + fullDocument.payload;
-    return http.post({ url: url })
-        .then(astroObj => {
-            let body = EJSON.parse(astroObj.body.text());
-            let lucky_number;
-            if (body.lucky_number) {
-                lucky_number = body.lucky_number;
+    context.functions.execute("mercuryFn")
+        .then(mercuryObj => {
+            let numOfDice;
+            if (mercuryObj.is_retrograde && mercuryObj.is_retrograde === true) {
+                numOfDice = 'd6';
             } else {
-                //it is the meaning of life
-                lucky_number = "42";
+                numOfDice = 'd12';
+            }
+            let url = 'http://roll.diceapi.com/json/' + numOfDice;
+            return http.get({ url: url });
+        })
+        .then(diceObj => {
+            let body = EJSON.parse(diceObj.body.text());
+            let offset;
+            if (body.dice && body.dice[0] && body.dice[0].value) {
+                offset = body.dice[0].value;
+            } else {
+                offset = 0;
             }
             return context.services
                 .get("mongodb-atlas")
                 .db("fb")
                 .collection("private")
                 .updateOne({ senderFbId: fullDocument.senderFbId },
-                    { nextTrigger: 'offsetFn', lucky_number, payload: fullDocument.payload, senderFbId: fullDocument.senderFbId })
+                    {
+                        nextTrigger: 'limitFn', offset,
+                        lucky_number: fullDocument.lucky_number,
+                        payload: fullDocument.payload, senderFbId: fullDocument.senderFbId
+                    })
                 .then(result => {
                     return;
                 })

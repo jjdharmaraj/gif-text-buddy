@@ -14,24 +14,36 @@
 
 exports = function (arg) {
     let fullDocument = arg.fullDocument;
-    const http = context.services.get("fb-hook-service");
-    let url = 'https://aztro.sameerkumar.website?sign=' + fullDocument.payload;
-    return http.post({ url: url })
-        .then(astroObj => {
-            let body = EJSON.parse(astroObj.body.text());
-            let lucky_number;
-            if (body.lucky_number) {
-                lucky_number = body.lucky_number;
+    let lucky_number = fullDocument.lucky_number;
+    let waterTemp, marsTemp;
+    context.functions.execute("mercuryFn")
+        .then(waterTempObj => {
+            if (waterTempObj.data && waterTempObj.data[0] && waterTempObj.data[0].v) {
+                waterTemp = waterTempObj.data[0].v;
             } else {
                 //it is the meaning of life
-                lucky_number = "42";
+                waterTemp = "42";
             }
+            return context.functions.execute("insightRoverFn");
+        })
+        .then(marsObj => {
+            if (marsObj.sol_keys && marsObj.sol_keys[0]) {
+                let sol = marsObj.sol_keys[0];
+                marsTemp = marsObj[sol].AT.av;
+            } else {
+                marsTemp = '42';
+            }
+            let limit = lucky_number * (Math.abs(Math.round(waterTemp / marsTemp)));
             return context.services
                 .get("mongodb-atlas")
                 .db("fb")
                 .collection("private")
                 .updateOne({ senderFbId: fullDocument.senderFbId },
-                    { nextTrigger: 'offsetFn', lucky_number, payload: fullDocument.payload, senderFbId: fullDocument.senderFbId })
+                    {
+                        nextTrigger: 'giphyApi', offset: fullDocument.offset,
+                        lucky_number: fullDocument.lucky_number, limit,
+                        payload: fullDocument.payload, senderFbId: fullDocument.senderFbId
+                    })
                 .then(result => {
                     return;
                 })
@@ -39,5 +51,5 @@ exports = function (arg) {
                     console.log(e);
                     return;
                 });
-        });
+        })
 };

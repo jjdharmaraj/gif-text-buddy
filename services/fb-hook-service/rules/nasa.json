@@ -1,0 +1,14 @@
+{
+    "id": "5cfdf75d6eff46c8d5673545",
+    "name": "nasa",
+    "actions": [
+        "get"
+    ],
+    "when": {
+        "%%args.url.host": {
+            "%in": [
+                "mars.nasa.gov"
+            ]
+        }
+    }
+}
