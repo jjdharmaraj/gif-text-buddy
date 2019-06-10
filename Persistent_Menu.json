@@ -27,6 +27,11 @@
                             "title": "Cancer: Jun 21 - Jul 22",
                             "type": "postback",
                             "payload": "cancer"
+                        },
+                        {
+                            "title": "Help",
+                            "type": "postback",
+                            "payload": "help"
                         }
                     ]
                 },
@@ -53,6 +58,11 @@
                             "title": "Scorpio: Oct 23 - Nov 21",
                             "type": "postback",
                             "payload": "scorpio"
+                        },
+                        {
+                            "title": "Help",
+                            "type": "postback",
+                            "payload": "help"
                         }
                     ]
                 },
@@ -79,6 +89,11 @@
                             "title": "Pisces: Feb 19 - Mar 20",
                             "type": "postback",
                             "payload": "pisces"
+                        },
+                        {
+                            "title": "Help",
+                            "type": "postback",
+                            "payload": "help"
                         }
                     ]
                 }

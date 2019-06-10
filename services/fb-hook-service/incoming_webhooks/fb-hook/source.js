@@ -151,38 +151,49 @@ function fbProcessIncoming(event) {
  * @param {Object} messagingEvent The relevant data sent from FB messenger.
  */
 function messageDispatch(senderFbId, messagingEvent) {
-    let text, payload;
+    let payload;
     if (messagingEvent.postback && messagingEvent.postback.payload) {
         payload = messagingEvent.postback.payload;
-    } else if (messagingEvent.message.quick_reply && messagingEvent.message.quick_reply.payload) {
+    }
+    //while I am not using quick replies right now, I might in the future.
+    else if (messagingEvent.message.quick_reply && messagingEvent.message.quick_reply.payload) {
         payload = messagingEvent.message.quick_reply.payload;
-    } else if (messagingEvent.message.text) {
-        payload = messagingEvent.message.text;
+    } else {
+        payload = 'n/a';
     }
-    //This just checks the first attachment TODO: handle attachment and catchall
-    else if (messagingEvent.message.attachments && messagingEvent.message.attachments[0]) {
-        // payload = messagingEvent.message.attachments[0].type;
-        payload = 'libra';
+    //send the message
+    if (payload == 'help') {
+        let text = 'Gif Text Buddy uses a formula to stitch together data from across the universe to find you the perfect gif '
+            + 'to send to your friends.  This includes the air temperature from the insight rover on Mars, the water temperature on '
+            + 'Cape Cod, and a roll of the dice in our trigger happy formula.';
+        return sendTextMessage(senderFbId, text)
+            .then(fbCallback => {
+                return fbCallback;
+            });
     }
-    //This shouldn't happen but it's FB so they could add new message types in the future.
-    else {
-        payload = 'libra';
+    //catchall; composer is diabled so text and attachments should not come through but just incase
+    else if (payload == 'n/a') {
+        let text = `I am sorry we cannot support that type of message right now.`;
+        return sendTextMessage(senderFbId, text)
+            .then(fbCallback => {
+                return fbCallback;
+            });
+    } else {
+        //send typing indicator since the machine might take awhile for the universe to find the perfect gif
+        return context.services
+            .get("mongodb-atlas")
+            .db("fb")
+            .collection("private")
+            .insertOne({
+                senderFbId, payload, nextTrigger: 'astroFn',
+            })
+            .then(result => {
+                return sendDots(senderFbId);
+            })
+            .then(fbCallback => {
+                return fbCallback;
+            });
     }
-
-    //send typing indicator since the machine might take awhile for the universe to find the perfect gif
-    return context.services
-        .get("mongodb-atlas")
-        .db("fb")
-        .collection("private")
-        .insertOne({
-            senderFbId, payload, nextTrigger: 'astroFn',
-        })
-        .then(result => {
-            return sendDots(senderFbId);
-        })
-        .then(fbCallback => {
-            return fbCallback;
-        });
 }
 /**
  * Typing indicators are automatically turned off after 20 seconds, or when the bot sends a message.
@@ -197,6 +208,33 @@ function sendDots(senderFbId) {
         let outgoingJson = {
             messaging_type: messaging_type, recipient: { id: senderFbId },
             sender_action: "typing_on"
+        };
+        sendToFb(outgoingJson)
+            .then(callbackFb => {
+                callbackFb = EJSON.parse(callbackFb.body.text());
+                resolve(callbackFb);
+            })
+            .catch(error => {
+                reject(error);
+            });
+    });
+}
+/**
+ * This just sends a text message.
+ * 
+ * https://developers.facebook.com/docs/messenger-platform/reference/send-api/#message
+ * 
+ * @param {String} senderFbId The user id from Facebook.
+ * @param {String} text The message sent to users; 2000 character limit.
+ */
+function sendTextMessage(senderFbId, text) {
+    return new Promise((resolve, reject) => {
+        const messaging_type = "RESPONSE";
+        let outgoingJson = {
+            messaging_type: messaging_type, recipient: { id: senderFbId },
+            message: {
+                text: text
+            }
         };
         sendToFb(outgoingJson)
             .then(callbackFb => {
