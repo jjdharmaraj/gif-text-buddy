@@ -12,10 +12,11 @@
  * limitations under the License.
  */
 
-exports = function (senderFbId, text, image) {
-    return sendImageMessage(senderFbId, image)
+exports = function (arg) {
+    let fullDocument = arg.fullDocument;
+    return sendImageMessage(fullDocument.senderFbId, fullDocument.image)
         .then(fbCallback => {
-            return sendTextMessage(senderFbId, text);
+            return sendTextMessage(fullDocument.senderFbId, 'Fun isn\'t something one considers when balancing the universe.');
         });
 };
 /**

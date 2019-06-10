@@ -115,8 +115,7 @@ function fbProcessIncoming(event) {
             if (messagingEvent.postback || messagingEvent.message) {
                 messageDispatch(senderFbId, messagingEvent)
                     .then(message => {
-                        if (message && message.message_id) {
-                            console.log(`Message id received: ${message.message_id}`);
+                        if (message && (message.message_id || message.recipient_id)) {
                             resolve('Thank U, Next');
                         } else {
                             console.log(JSON.stringify(message));
@@ -152,31 +151,38 @@ function fbProcessIncoming(event) {
  * @param {Object} messagingEvent The relevant data sent from FB messenger.
  */
 function messageDispatch(senderFbId, messagingEvent) {
-    let text;
+    let text, payload;
     if (messagingEvent.postback && messagingEvent.postback.payload) {
-        text = `Thanks for the postback!  Your payload:  ${messagingEvent.postback.payload}`;
+        payload = messagingEvent.postback.payload;
     } else if (messagingEvent.message.quick_reply && messagingEvent.message.quick_reply.payload) {
-        text = `Thanks for the quick reply!  Your payload: ${messagingEvent.message.quick_reply.payload}`;
+        payload = messagingEvent.message.quick_reply.payload;
     } else if (messagingEvent.message.text) {
-        text = `Thanks for the text message! Your message:  ${messagingEvent.message.text}`;
+        payload = messagingEvent.message.text;
     }
-    //This just checks the first attachment
+    //This just checks the first attachment TODO: handle attachment and catchall
     else if (messagingEvent.message.attachments && messagingEvent.message.attachments[0]) {
-        text = `Thanks for the ${messagingEvent.message.attachments[0].type} attachment!`;
+        // payload = messagingEvent.message.attachments[0].type;
+        payload = 'libra';
     }
     //This shouldn't happen but it's FB so they could add new message types in the future.
     else {
-        text = 'Thanks for the message but I am not sure what kind.';
+        payload = 'libra';
     }
 
     //send typing indicator since the machine might take awhile for the universe to find the perfect gif
-    return sendDots(senderFbId)
-        .then(fbCallback => {
-            return context.functions.execute("giphyApi", "bruins", 25, 0);
+    return context.services
+        .get("mongodb-atlas")
+        .db("fb")
+        .collection("private")
+        .insertOne({
+            senderFbId, payload, nextTrigger: 'giphyApi',
         })
-        .then(image => {
-            return context.functions.execute("sendToFb", senderFbId, text, image);
-        });
+        .then(result => {
+            return sendDots(senderFbId);
+        })
+        .then(fbCallback => {
+            return fbCallback;
+        })
 }
 /**
  * Typing indicators are automatically turned off after 20 seconds, or when the bot sends a message.
