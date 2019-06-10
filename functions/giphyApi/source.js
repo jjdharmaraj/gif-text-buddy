@@ -16,12 +16,13 @@ exports = function (arg) {
   let fullDocument = arg.fullDocument;
   const GIPHY_API_KEY = context.values.get("GIPHY_API_KEY");
   const http = context.services.get("fb-hook-service");
+  console.log(fullDocument.lucky_number);
 
   let url = "https://api.giphy.com/v1/gifs/search?api_key=" + GIPHY_API_KEY
     + "&q=" + fullDocument.payload
-  // + "&limit=" + limit
-  + "&offset=" + fullDocument.lucky_number
-  + "&rating=G&lang=en";
+    + "&limit=" + fullDocument.limit
+    + "&offset=" + fullDocument.lucky_number
+    + "&rating=G&lang=en";
   return http.get({ url: url })
     .then(giphyObj => {
       let body = EJSON.parse(giphyObj.body.text());

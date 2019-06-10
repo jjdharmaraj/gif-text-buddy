@@ -17,23 +17,31 @@ exports = function (arg) {
     const http = context.services.get("fb-hook-service");
     console.log(fullDocument.lucky_number);
 
-    let url = 'https://mercuryretrogradeapi.com';
+    let url = 'https://tidesandcurrents.noaa.gov/api/datagetter?'
+        //Woods Hole, MA
+        + 'station=8447930&product=water_temperature'
+        + '&units=english&time_zone=gmt&application=ports_screen&format=json&date=latest';
     return http.post({ url: url })
         .then(astroObj => {
             let body = EJSON.parse(astroObj.body.text());
-            let lucky_number = fullDocument.lucky_number;
-            if (body.is_retrograde && body.is_retrograde === true) {
-              //First planet from the sun
-                lucky_number = lucky_number + 1;
+            let v, limit;
+            if (body.data && body.data[0] && body.data[0].v) {
+                v = body.data[0].v;
             } else {
-                lucky_number = lucky_number;
+                //it is the meaning of life
+                v = "42";
             }
+            //Aquaman is concerned about the water temp in the northeast
+            limit = Math.round(Math.E * v);
             return context.services
                 .get("mongodb-atlas")
                 .db("fb")
                 .collection("private")
                 .updateOne({ senderFbId: fullDocument.senderFbId },
-                    { nextTrigger: 'noaaFn', lucky_number, payload: fullDocument.payload, senderFbId: fullDocument.senderFbId })
+                    {
+                        nextTrigger: 'giphyApi', limit, lucky_number: fullDocument.lucky_number,
+                        payload: fullDocument.payload, senderFbId: fullDocument.senderFbId
+                    })
                 .then(result => {
                     return;
                 })

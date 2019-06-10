@@ -1,0 +1,14 @@
+{
+    "id": "5cfdd88cc0a13a7cddb1e408",
+    "name": "noaaWaterTemp",
+    "actions": [
+        "post"
+    ],
+    "when": {
+        "%%args.url.host": {
+            "%in": [
+                "tidesandcurrents.noaa.gov"
+            ]
+        }
+    }
+}
