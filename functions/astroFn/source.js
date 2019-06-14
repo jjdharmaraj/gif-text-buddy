@@ -23,12 +23,17 @@ exports = (arg) => {
             if (body.lucky_number) {
                 lucky_number = body.lucky_number;
             } else {
-                //it is the meaning of life
+                //it is the meaning of life; just really a backup in case the astro API is down
                 lucky_number = "42";
             }
             return context.services.get("mongodb-atlas").db("fb").collection("private")
                 .updateOne({ _id: fullDocument._id },
-                    { nextTrigger: 'offsetFn', lucky_number, payload: fullDocument.payload, senderFbId: fullDocument.senderFbId });
+                    {
+                        nextTrigger: 'offsetFn',
+                        lucky_number: lucky_number,
+                        payload: fullDocument.payload,
+                        senderFbId: fullDocument.senderFbId
+                    });
         })
         .then(result => {
             return;

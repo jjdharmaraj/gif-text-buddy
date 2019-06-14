@@ -21,7 +21,7 @@ exports = (arg) => {
             if (waterTempObj.data && waterTempObj.data[0] && waterTempObj.data[0].v) {
                 waterTemp = waterTempObj.data[0].v;
             } else {
-                //it is the meaning of life
+                //it is the meaning of life; really just a backup incase the NOAA API goes down
                 waterTemp = "42";
             }
             return context.functions.execute("insightRoverFn");
@@ -31,6 +31,7 @@ exports = (arg) => {
                 let sol = marsObj.sol_keys[0];
                 marsTemp = marsObj[sol].AT.av;
             } else {
+                //it is the meaning of life; really just a backup incase the NASA API goes down
                 marsTemp = '42';
             }
             //the universe dictatd this formula to be a limiting factor on how many GIFs to get
@@ -38,9 +39,12 @@ exports = (arg) => {
             return context.services.get("mongodb-atlas").db("fb").collection("private")
                 .updateOne({ _id: fullDocument._id },
                     {
-                        nextTrigger: 'giphyApi', offset: fullDocument.offset,
-                        lucky_number: fullDocument.lucky_number, limit,
-                        payload: fullDocument.payload, senderFbId: fullDocument.senderFbId
+                        nextTrigger: 'giphyApi',
+                        offset: fullDocument.offset,
+                        lucky_number: fullDocument.lucky_number,
+                        limit: limit,
+                        payload: fullDocument.payload,
+                        senderFbId: fullDocument.senderFbId
                     });
         })
         .then(result => {
