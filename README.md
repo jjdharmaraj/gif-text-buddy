@@ -8,6 +8,8 @@ Have you ever needed help finding the best GIF to send your bestie but don't kno
 
 ![The different steps of the machine](https://raw.githubusercontent.com/jjdharmaraj/gif-text-buddy/master/images/diagram.jpg)
 
+If you want to deploy this bot, I recommend reading the [CLI Instructions](https://github.com/jjdharmaraj/stitch-fb-starter/blob/master/FBInstructionsStitchCLI.md) from my Facebook Starter project that is specifically for MongoDB and Stitch.
+
 ## Thanks
 
 0. https://www.mongodb.com/

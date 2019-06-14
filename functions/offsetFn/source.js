@@ -32,14 +32,17 @@ exports = (arg) => {
             if (body.dice && body.dice[0] && body.dice[0].value) {
                 offset = body.dice[0].value;
             } else {
+                //just in case the dice API goes down
                 offset = 0;
             }
             return context.services.get("mongodb-atlas").db("fb").collection("private")
                 .updateOne({ _id: fullDocument._id },
                     {
-                        nextTrigger: 'limitFn', offset,
+                        nextTrigger: 'limitFn',
+                        offset: offset,
                         lucky_number: fullDocument.lucky_number,
-                        payload: fullDocument.payload, senderFbId: fullDocument.senderFbId
+                        payload: fullDocument.payload,
+                        senderFbId: fullDocument.senderFbId
                     });
         })
         .then(result => {

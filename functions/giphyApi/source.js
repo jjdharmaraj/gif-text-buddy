@@ -42,9 +42,11 @@ exports = (arg) => {
       return context.services.get("mongodb-atlas").db("fb").collection("private")
         .updateOne({ _id: fullDocument._id },
           {
-            nextTrigger: 'sendToFb', image, senderFbId: fullDocument.senderFbId,
+            nextTrigger: 'sendToFb',
+            image: image,
+            senderFbId: fullDocument.senderFbId,
             offset: fullDocument.offset,
-            lucky_number,
+            lucky_number: lucky_number,
             limit: fullDocument.limit,
             payload: fullDocument.payload,
           });
